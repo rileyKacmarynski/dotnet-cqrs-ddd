@@ -1,0 +1,50 @@
+﻿using Dapper;
+using SampleStore.Application.Configuration.Data;
+using SampleStore.Application.Configuration.Queries;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace SampleStore.Application.Customers.GetCustomerDetails
+{
+    public class GetCustomerDetailsQuery : IQuery<CustomerDetailsDto>
+    {
+        public GetCustomerDetailsQuery(Guid customerId)
+        {
+            CustomerId = customerId;
+        }
+
+        public Guid CustomerId { get; }
+    }
+
+    public class GetCustomerDetailsQueryHandler : IQueryHandler<GetCustomerDetailsQuery, CustomerDetailsDto>
+    {
+        private readonly ISqlConnectionFactory _sqlConnectionFactory;
+
+        public GetCustomerDetailsQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
+        {
+            _sqlConnectionFactory = sqlConnectionFactory;
+        }
+
+        public Task<CustomerDetailsDto> Handle(GetCustomerDetailsQuery request, CancellationToken cancellationToken)
+        {
+            const string sql = "SELECT " +
+                               "[Customer].[Id], " +
+                               "[Customer].[Name], " +
+                               "[Customer].[Email], " +
+                               "[Customer].[WelcomeEmailWasSent] " +
+                               "FROM orders.v_Customers AS [Customer] " +
+                               "WHERE [Customer].[Id] = @CustomerId ";
+
+            var connection = _sqlConnectionFactory.GetOpenConnection();
+
+            return connection.QuerySingleAsync<CustomerDetailsDto>(sql, new
+            {
+                request.CustomerId
+            });
+        }
+    }
+}

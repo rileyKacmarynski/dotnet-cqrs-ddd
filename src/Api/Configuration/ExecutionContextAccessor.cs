@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using SampleStore.Application.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Api.Configuration
 {
-    internal class ExecutionContextAccessor
+    internal class ExecutionContextAccessor : IExecutionContextAccessor
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -20,7 +21,7 @@ namespace Api.Configuration
         {
             get
             {
-                if (CorrelationIdExists)
+                if (IsAvailable)
                 {
                     return Guid.Parse(
                         _httpContextAccessor.HttpContext.Request.Headers[CorrelationMiddleware.CorrelationHeaderKey]
@@ -30,7 +31,7 @@ namespace Api.Configuration
             }
         }
 
-        public bool CorrelationIdExists =>
+        public bool IsAvailable =>
             _httpContextAccessor.HttpContext != null &&
             _httpContextAccessor.HttpContext.Request.Headers.Keys.Any(x => x == CorrelationMiddleware.CorrelationHeaderKey);
     }
@@ -40,7 +41,7 @@ namespace Api.Configuration
         internal static IServiceCollection AddExecutionContextAccessor(this IServiceCollection services)
         {
             services.AddHttpContextAccessor();
-            services.AddSingleton<ExecutionContextAccessor>();
+            services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
 
             return services;
         }
