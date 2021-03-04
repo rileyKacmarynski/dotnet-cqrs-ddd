@@ -11,12 +11,12 @@ namespace SampleStore.Application.Customers.IntegrationHandlers
 {
     public class CustomerRegisteredNotificationHandler : INotificationHandler<CustomerRegisteredNotification>
     {
-        private readonly ICommandsScheduler _commandsScheduler;
+        private readonly ICommandScheduler _commandsScheduler;
         private readonly IEmailSender _emailSender;
         private readonly EmailSettings _emailSettings;
         private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
-        public CustomerRegisteredNotificationHandler(ICommandsScheduler commandsScheduler, IEmailSender emailSender, EmailSettings emailSettings, ISqlConnectionFactory sqlConnectionFactory)
+        public CustomerRegisteredNotificationHandler(ICommandScheduler commandsScheduler, IEmailSender emailSender, EmailSettings emailSettings, ISqlConnectionFactory sqlConnectionFactory)
         {
             _commandsScheduler = commandsScheduler;
             _emailSender = emailSender;

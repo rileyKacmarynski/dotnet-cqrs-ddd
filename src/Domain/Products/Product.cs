@@ -12,7 +12,7 @@ namespace SampleStore.Domain.Products
     {
         public Guid Id { get; private set; }
         public string Name { get; private set; }
-        public MoneyValue Price { get; set; }
+        private List<ProductPrice> _prices;
 
         private Product() { }
     }

@@ -23,7 +23,7 @@ namespace SampleStore.Domain.Customers
 
         private readonly List<Order> _orders;
 
-        private bool _welcomeEmailSent;
+        private bool _welcomeEmailWasSent;
 
         private Customer(string email, string name)
         {
@@ -42,7 +42,7 @@ namespace SampleStore.Domain.Customers
 
         public void MarkAsWelcomed()
         {
-            _welcomeEmailSent = true;
+            _welcomeEmailWasSent = true;
         }
 
         public Guid PlaceOrder(

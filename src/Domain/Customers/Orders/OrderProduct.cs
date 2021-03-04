@@ -5,7 +5,7 @@ using System;
 
 namespace SampleStore.Domain.Customers.Orders
 {
-    internal class OrderProduct : Entity
+    public class OrderProduct : Entity
     {
         public int Quantity { get; private set; }
         public Guid ProductId { get; private set; }

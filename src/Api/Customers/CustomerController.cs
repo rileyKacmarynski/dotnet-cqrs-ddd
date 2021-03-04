@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SampleStore.Application.Customers;
+using SampleStore.Application.Customers.GetCustomerDetails;
 using SampleStore.Application.Customers.RegisterCustomer;
 using System;
 using System.Collections.Generic;
@@ -21,12 +22,32 @@ namespace SampleStore.Api.Customers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Get customer.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("")]
         [HttpGet]
-        [ProducesResponseType(typeof(CustomerDto), (int)HttpStatusCode.Created)]
-        public async Task<IActionResult> RegisterCustomer()
+        [ProducesResponseType(typeof(CustomerDetailsDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetCustomer(Guid id)
         {
-            var customer = await _mediator.Send(new RegisterCustomerCommand("bob@domain.com", "Bob"));
+            var customer = await _mediator.Send(new GetCustomerDetailsQuery(id));
+
+            return Ok(customer);
+        }
+
+        /// <summary>
+        /// Register customer.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Route("")]
+        [HttpPost]
+        [ProducesResponseType(typeof(CustomerDto), (int)HttpStatusCode.Created)]
+        public async Task<IActionResult> RegisterCustomer([FromBody]RegisterCustomerRequest request)
+        {
+            var customer = await _mediator.Send(new RegisterCustomerCommand(request.Email, request.Name));
 
             return Created(string.Empty, customer);
         }

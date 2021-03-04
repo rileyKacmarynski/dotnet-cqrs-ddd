@@ -1,4 +1,5 @@
 ﻿using SampleStore.Application.Configuration.Commands;
+using SampleStore.Domain.Customers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,22 @@ namespace SampleStore.Application.Customers.RegisterCustomer
 {
     public class RegisterCustomerCommandHandler : ICommandHandler<RegisterCustomerCommand, CustomerDto>
     {
-        public Task<CustomerDto> Handle(RegisterCustomerCommand request, CancellationToken cancellationToken)
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IUniqueCustomerChecker _uniqueCustomerChecker;
+
+        public RegisterCustomerCommandHandler(ICustomerRepository customerRepository, IUniqueCustomerChecker uniqueCustomerChecker)
         {
+            _customerRepository = customerRepository;
+            _uniqueCustomerChecker = uniqueCustomerChecker;
+        }
 
+        public async Task<CustomerDto> Handle(RegisterCustomerCommand request, CancellationToken cancellationToken)
+        {
+            var customer = Customer.Register(request.Email, request.Name, _uniqueCustomerChecker);
 
-            return Task.FromResult(new CustomerDto { Id = Guid.NewGuid() });
+            await _customerRepository.AddAsync(customer);
+
+            return new CustomerDto { Id = customer.Id };
         }
     }
 }

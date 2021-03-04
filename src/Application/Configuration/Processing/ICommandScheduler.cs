@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SampleStore.Application.Configuration.Processing
 {
-    public interface ICommandsScheduler
+    public interface ICommandScheduler
     {
         Task EnqueueAsync<T>(ICommand<T> command);
     }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SampleStore.Api
 {
-    public class CustomerRequest
+    public class RegisterCustomerRequest
     {
         public string Email { get; set; }
         public string Name { get; set; }
