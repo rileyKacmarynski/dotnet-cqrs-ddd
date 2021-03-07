@@ -40,7 +40,7 @@ namespace SampleStore.Infrastructure.Events
             // lets say we have a CustomerRegisteredDomainEvent
             foreach (var domainEvent in domainEvents)
             {
-                var domainNotification = _domainEventNotificationFactory.GetDomainEventNotification(domainEvent);
+                var domainNotification = _domainEventNotificationFactory.GetNotification(domainEvent);
                 if (domainNotification != null)
                 {
                     domainEventNotifications.Add(domainNotification);

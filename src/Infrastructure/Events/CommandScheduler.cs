@@ -4,9 +4,6 @@ using SampleStore.Application.Configuration.Commands;
 using SampleStore.Application.Configuration.Data;
 using SampleStore.Application.Configuration.Processing;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SampleStore.Infrastructure.Events

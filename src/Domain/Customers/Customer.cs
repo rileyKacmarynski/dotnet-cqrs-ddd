@@ -3,6 +3,7 @@ using SampleStore.Domain.Customers.Orders;
 using SampleStore.Domain.Customers.Rules;
 using SampleStore.Domain.Products;
 using SampleStore.Domain.SharedKernel.Abstractions;
+using SampleStore.Domain.SharedKernel.Abstractions.TypedIds;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ using System.Threading.Tasks;
 
 namespace SampleStore.Domain.Customers
 {
+    public record CustomerId(Guid Value) : StronglyTypedId<Guid>(Value);
+
     public class Customer : Entity, IAggregateRoot
     {
         // Seems like strongly typed IDs are the recommended approach here.
-        public Guid Id { get; private set; }
+        public CustomerId Id { get; private set; }
 
         // This should probably be a value object, but I want to focus on the event stuff. 
         private string _email;
@@ -27,7 +30,7 @@ namespace SampleStore.Domain.Customers
 
         private Customer(string email, string name)
         {
-            Id = Guid.NewGuid();
+            Id = new CustomerId(Guid.NewGuid());
             _email = email;
             _name = name;
 

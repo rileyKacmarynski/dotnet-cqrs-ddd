@@ -9,6 +9,11 @@ namespace SampleStore.Application.Configuration.DomainEvents
 {
     public class DomainEventNotificationFactory : IDomainEventNotificationFactory
     {
+        // using ConcurrentBag because this class is registered as a singleton. I think this is the right way
+        // to do this sort of thing. 
+        private static readonly ConcurrentBag<Type> _notificationTypes = new ConcurrentBag<Type>();
+        private readonly IServiceProvider _serviceProvider;
+
         public DomainEventNotificationFactory(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
@@ -24,10 +29,7 @@ namespace SampleStore.Application.Configuration.DomainEvents
             }
         }
 
-        private static readonly ConcurrentBag<Type> _notificationTypes = new ConcurrentBag<Type>();
-        private readonly IServiceProvider _serviceProvider;
-
-        public IDomainEventNotification<IDomainEvent> GetDomainEventNotification(IDomainEvent domainEvent)
+        public IDomainEventNotification<IDomainEvent> GetNotification(IDomainEvent domainEvent)
         {
             // this gives us the IDomainEventNofication open generic type
             var domainEventNotificationType = typeof(IDomainEventNotification<>);
@@ -36,16 +38,13 @@ namespace SampleStore.Application.Configuration.DomainEvents
             // generic (I think). In this case IDomainEventNotification<CustomerRegisteredDomainEvent>
             var domainNotificationWithGenericType = domainEventNotificationType.MakeGenericType(domainEvent.GetType());
 
-
+            // use the type above to find the class that implements IDomainEventNotification<CustomerRegisteredEvent>
+            // which is CustomerRegisteredNotification
             var domainNotificationType = _notificationTypes
                 .Where(t => t.GetInterfaces()
                     .Contains(domainNotificationWithGenericType))
                 .SingleOrDefault();
 
-            // I'm not sure if this will instantiate the proper CustomerRegisteredNotification
-            // we have to work with DI to instantiate the a DomainEventNotification<CustomerRegisteredDomainEvent>
-
-            // Do I have to register all DomainEventNotifications with DI to be able to do this or just DomainNotificationBase
             return domainNotificationType is not null
                 ? ActivatorUtilities.CreateInstance(_serviceProvider, domainNotificationType, domainEvent) as IDomainEventNotification<IDomainEvent>
                 : null;

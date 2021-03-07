@@ -4,6 +4,6 @@ namespace SampleStore.Application.Configuration.DomainEvents
 {
     public interface IDomainEventNotificationFactory
     {
-        IDomainEventNotification<IDomainEvent> GetDomainEventNotification(IDomainEvent domainEvent);
+        IDomainEventNotification<IDomainEvent> GetNotification(IDomainEvent domainEvent);
     }
 }

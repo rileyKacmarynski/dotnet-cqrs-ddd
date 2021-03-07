@@ -9,8 +9,8 @@ namespace SampleStore.Domain.Customers.Events
 {
     public class CustomerRegisteredEvent : DomainEventBase
     {
-        public Guid CustomerId { get;  }
-        public CustomerRegisteredEvent(Guid customerId)
+        public CustomerId CustomerId { get;  }
+        public CustomerRegisteredEvent(CustomerId customerId)
         {
             CustomerId = customerId;
         }

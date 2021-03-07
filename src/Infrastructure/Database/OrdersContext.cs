@@ -27,6 +27,7 @@ namespace SampleStore.Infrastructure.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrdersContext).Assembly);
+            StronglyTypedIdConfigurator.AddStronglyTypedIdConversions(modelBuilder);
         }
     }
 }

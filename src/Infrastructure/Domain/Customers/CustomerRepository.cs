@@ -24,7 +24,8 @@ namespace SampleStore.Infrastructure.Domain.Customers
             await _context.Customers.AddAsync(customer);
         }
 
-        public async Task<Customer> GetByIdAsync(Guid id)
+        // Making ID work for EF Core might change this.
+        public async Task<Customer> GetByIdAsync(CustomerId id)
         {
             return await _context.Customers
                 .IncludePaths(

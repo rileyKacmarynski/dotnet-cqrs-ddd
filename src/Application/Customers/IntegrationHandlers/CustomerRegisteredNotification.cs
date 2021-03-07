@@ -1,4 +1,5 @@
 ﻿using SampleStore.Application.Configuration.DomainEvents;
+using SampleStore.Domain.Customers;
 using SampleStore.Domain.Customers.Events;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace SampleStore.Application.Customers.IntegrationHandlers
 {
     public class CustomerRegisteredNotification : DomainNotificationBase<CustomerRegisteredEvent>
     {
-        public Guid CustomerId { get; }
+        public CustomerId CustomerId { get; }
 
         public CustomerRegisteredNotification(CustomerRegisteredEvent domainEvent) : base(domainEvent)
         {
@@ -18,7 +19,7 @@ namespace SampleStore.Application.Customers.IntegrationHandlers
         }
 
         [JsonConstructor]
-        public CustomerRegisteredNotification(Guid customerId) : base(null)
+        public CustomerRegisteredNotification(CustomerId customerId) : base(null)
         {
             CustomerId = customerId;
         }

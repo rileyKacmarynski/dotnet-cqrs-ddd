@@ -34,7 +34,7 @@ namespace SampleStore.Application.Customers.IntegrationHandlers
 
             var customerEmail = await connection.QueryFirstAsync<string>(sql, new
             {
-                Id = notification.CustomerId
+                Id = notification.CustomerId.Value
             });
 
             var emailMessage = new EmailMessage(

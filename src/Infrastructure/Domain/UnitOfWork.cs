@@ -22,15 +22,7 @@ namespace SampleStore.Domain
         public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
         {
             await _domainEventDispatcher.DispatchEventAsync();
-            try
-            {
-                return await _ordersContext.SaveChangesAsync();
-
-            }
-            catch(System.Exception ex)
-            {
-                throw;
-            }
+            return await _ordersContext.SaveChangesAsync();
         }
     }
 }

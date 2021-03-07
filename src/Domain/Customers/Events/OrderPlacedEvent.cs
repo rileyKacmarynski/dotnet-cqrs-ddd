@@ -7,7 +7,7 @@ namespace SampleStore.Domain.Customers
     public class OrderPlacedEvent : DomainEventBase
     {
         
-        public OrderPlacedEvent(Guid orderId, Guid customerId, MoneyValue total)
+        public OrderPlacedEvent(Guid orderId, CustomerId customerId, MoneyValue total)
         {
             OrderId = orderId;
             CustomerId = customerId;
@@ -15,7 +15,7 @@ namespace SampleStore.Domain.Customers
         }
 
         public Guid OrderId { get; }
-        public Guid CustomerId { get; }
+        public CustomerId CustomerId { get; }
         public MoneyValue Total { get; }
     }
 }

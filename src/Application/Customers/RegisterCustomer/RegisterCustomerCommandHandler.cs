@@ -26,7 +26,7 @@ namespace SampleStore.Application.Customers.RegisterCustomer
 
             await _customerRepository.AddAsync(customer);
 
-            return new CustomerDto { Id = customer.Id };
+            return new CustomerDto { Id = customer.Id.Value };
         }
     }
 }

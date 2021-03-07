@@ -30,18 +30,6 @@ namespace SampleStore.Application.Configuration
 
             services.AddScoped<IUniqueCustomerChecker, UniqueCustomerChecker>();
 
-            //services.AddTransient(typeof(IDomainEventNotification<>), typeof(DomainNotificationBase<>));
-
-            // add all domain event notifications can't do this becuase the service provider doesn't know how
-            // to construct a domain event. 
-            //services.Scan(scan =>
-            //    scan
-            //    .FromAssemblyOf<CustomerRegisteredNotification>()
-            //    .AddClasses(classes => classes.AssignableTo(typeof(IDomainEventNotification<>)))
-            //    .AsImplementedInterfaces());
-
-            //services.AddSingleton(typeof(IDomainEventNotification<>), typeof(DomainEventNotificationFactory<>));
-
             return services;
         }
 
