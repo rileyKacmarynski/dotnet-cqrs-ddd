@@ -48,7 +48,7 @@ namespace SampleStore.Domain.Customers
             _welcomeEmailWasSent = true;
         }
 
-        public Guid PlaceOrder(
+        public OrderId PlaceOrder(
             List<OrderProductData> orderProducts,
             List<ProductPriceData> productPrices,
             string currency)

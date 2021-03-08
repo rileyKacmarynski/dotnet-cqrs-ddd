@@ -1,19 +1,20 @@
 ﻿using SampleStore.Domain.Products;
 using SampleStore.Domain.SharedKernel;
 using SampleStore.Domain.SharedKernel.Abstractions;
+using SampleStore.Domain.SharedKernel.Abstractions.TypedIds;
 using SampleStore.Domain.SharedKernel.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SampleStore.Domain.Customers.Orders
 {
+    public record OrderId(Guid Value) : StronglyTypedId<Guid>(Value);
+
     public class Order : Entity
     {
         // internal because this isn't an aggregate root.
-        internal Guid Id;
+        public OrderId Id;
         private MoneyValue _total;
         private List<OrderProduct> _orderProducts;
         private bool _isRemoved;
@@ -30,7 +31,7 @@ namespace SampleStore.Domain.Customers.Orders
         private Order(List<OrderProductData> orderProductsData, List<ProductPriceData> productPrices, string currency)
         {
             _orderDate = SystemClock.Now;
-            Id = Guid.NewGuid();
+            Id = new OrderId(Guid.NewGuid());
             _orderProducts = new List<OrderProduct>();
 
             foreach(var orderProductData in orderProductsData)

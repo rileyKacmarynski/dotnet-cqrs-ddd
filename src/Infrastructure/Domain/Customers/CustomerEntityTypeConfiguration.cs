@@ -30,14 +30,13 @@ namespace SampleStore.Infrastructure.Domain.Customers
 
             builder.OwnsMany<Order>(OrdersList, x =>
             {
-                x.WithOwner().HasForeignKey("OrderId");
+                x.WithOwner().HasForeignKey("CustomerId");
 
                 x.ToTable("Orders", SchemaNames.Orders);
 
                 x.Property<bool>("_isRemoved").HasColumnName("IsRemoved");
                 x.Property<DateTime>("_orderDate").HasColumnName("OrderDate");
                 x.Property<DateTime?>("_orderChangeDate").HasColumnName("OrderChangeDate");
-                x.Property<Guid>("Id");
                 x.HasKey("Id");
 
                 x.Property("_status").HasColumnName("StatusId")

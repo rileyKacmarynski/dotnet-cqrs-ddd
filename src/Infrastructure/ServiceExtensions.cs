@@ -2,14 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SampleStore.Application.Configuration.Commands;
 using SampleStore.Application.Configuration.Data;
 using SampleStore.Application.Configuration.DomainEvents;
 using SampleStore.Application.Configuration.Emails;
 using SampleStore.Application.Configuration.Processing;
 using SampleStore.Application.Customers;
-using SampleStore.Application.Customers.IntegrationHandlers;
-using SampleStore.Application.Customers.RegisterCustomer;
 using SampleStore.Application.Payments;
 using SampleStore.Application.Products;
 using SampleStore.Domain;

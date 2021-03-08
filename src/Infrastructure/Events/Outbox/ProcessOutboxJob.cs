@@ -28,8 +28,6 @@ namespace SampleStore.Infrastructure.Events.Outbox
 
         public async Task Execute(IJobExecutionContext context)
         {
-            //_mediator.Send(new ProcessOutboxCommand());
-
             var connection = _sqlConnectionFactory.GetOpenConnection();
             const string sql = "SELECT " +
                    "[OutboxMessage].[Id], " +

@@ -4,13 +4,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Quartz;
-using Quartz.Impl;
-using Quartz.Spi;
 using SampleStore.Api.Quartz;
 using SampleStore.Application.Configuration;
 using SampleStore.Application.Configuration.StronglyTypedIds;
 using SampleStore.Infrastructure;
+using SampleStore.Infrastructure.Events.InternalCommands;
 using SampleStore.Infrastructure.Events.Outbox;
 
 namespace Api
@@ -40,6 +38,7 @@ namespace Api
 
             services.AddQuartz();
             services.AddQuartzJob<ProcessOutboxJob>(cronExpression: "0/5 * * * * ?");
+            services.AddQuartzJob<ProcessInternalCommandsJob>(cronExpression: "0/15 * * * * ?");
 
             services.AddApplicationServices(Configuration);
             services.AddInfrastructureServices(Configuration);
